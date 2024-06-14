@@ -37,12 +37,14 @@ public class Service {
         for (int i = 0; i < contentData.getCaseFields().size(); i++) {
             sb.append("Casefield name : ").append(contentData.getCaseFields().get(i).getName()).append(", ");
             sb.append("Description : ").append(contentData.getCaseFields().get(i).getDescription());
+//            sb.append("The regex we are using to extract this data is : ").append(contentData.getCaseFields().get(i).getRegex());
             sb.append(" /n ");
         }
         sb.append("and the definitions for author Fields are as follows : ");
         for (int i = 0; i < contentData.getAuthorFields().size(); i++) {
             sb.append("Authorfield name : ").append(contentData.getAuthorFields().get(i).getName()).append(", ");
             sb.append("Description : ").append(contentData.getAuthorFields().get(i).getDescription());
+//            sb.append("The regex we are using to extract this data is : ").append(contentData.getAuthorFields().get(i).getRegex());
             sb.append(" /n ");
         }
         sb.append("The text you need to extract the data from is : ");
@@ -80,10 +82,10 @@ public class Service {
                             .setThreshold(SafetySetting.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE)
                             .build()
             );
-            Content systemInstruction = ContentMaker.fromMultiModalData("You are a text information extractor. You need to extract Case Fields and Author Fields from the text input i give based on the definitions of Case Fields and Author Fields I provide you with.Send the data back in this format {CaseFields: [{FieldName:CaseField1Name,FieldValue:CaseField1Value},{FieldName:CaseField2Name,FieldValue:CaseField2Value}, ...], AuthorFields: [{FieldName:AuthorField1Name,FieldValue:AuthorField1Value},{FieldName:AuthorField2Name,FieldValue:AuthorField2Value}, ...]}");
+            Content systemInstruction = ContentMaker.fromMultiModalData("You are an expert in customer service. You need to identify Case Fields and Author Fields from the text input i give based on the definitions of Case Fields and Author Fields I provide you with.Do not manipulate the data in any form.Send the data back in this format {CaseFields: [{FieldName:CaseField1Name,FieldValue:CaseField1Value},{FieldName:CaseField2Name,FieldValue:CaseField2Value}, ...], AuthorFields: [{FieldName:AuthorField1Name,FieldValue:AuthorField1Value},{FieldName:AuthorField2Name,FieldValue:AuthorField2Value}, ...]}.Please strictly follow the descriptions and dont break any conditions I provide you with. ");
             GenerativeModel model =
                     new GenerativeModel.Builder()
-                            .setModelName("gemini-1.5-pro-001")
+                            .setModelName("gemini-1.5-flash-001")
                             .setVertexAi(vertexAi)
                             .setGenerationConfig(generationConfig)
                             .setSafetySettings(safetySettings)
